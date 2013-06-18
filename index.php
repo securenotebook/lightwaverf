@@ -1,6 +1,8 @@
 
 <? include ("php_config.php");?>
 
+
+<!-- You shouldnt really edit below unless you know what you are doing -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,6 +56,7 @@
         // links the button to the slider
         var loadSliderEvents = function($deviceId) {
 
+	        // think this can be cleaned up.... maybe just on stop...
             var sliderOpts = {
                 change: function() {
                     controlLights($deviceId, this.value)
@@ -120,9 +123,7 @@
         });
 
  </script>
-
-
-      <script src="javascript/codiqa.ext.js"></script>
+<script src="javascript/codiqa.ext.js"></script>
 
 </head>
 <body>
@@ -132,6 +133,8 @@
         <h3>
             LightWaveRF
             <input type="submit" id="all" data-icon="alert" data-iconpos="top" value="Leave House" onclick="controlLights('all', 'off')">
+            <input type="submit" id="all" data-icon="alert" data-iconpos="top" value="Leave House" onclick="controlLights('all', 'off')">
+
         </h3>
 
 
@@ -169,12 +172,8 @@
                             <tr>
                                 <td colspan="2">
                                     <div data-role="content">
-                                       
-                                       
-											    	 <input id="<? print $DeviceKey; ?>Slider" type="range" name="slider" value="0" min="0" max="100" data-highlight="true">
-											                                          
-                                       
-                                    </div>
+                                       <input id="<? print $DeviceKey; ?>Slider" type="range" name="slider" value="0" min="0" max="100" data-highlight="true">
+									</div>
                                 </td>
                             </tr>
                         <?}?>
