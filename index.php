@@ -133,9 +133,7 @@
         <h3>
             LightWaveRF
             <input type="submit" id="all" data-icon="alert" data-iconpos="top" value="Leave House" onclick="controlLights('all', 'off')">
-            <input type="submit" id="all" data-icon="alert" data-iconpos="top" value="Leave House" onclick="controlLights('all', 'off')">
-
-        </h3>
+         </h3>
 
 
         <div data-role="collapsible-set">
