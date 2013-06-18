@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title></title>
+    <link rel="stylesheet" href="css/jquery.mobile-1.3.1.min.css">
+
+    <!-- Extra Codiqa features -->
+    <link rel="stylesheet" href="javascript/codiqa.ext.css">
+
+    <!-- jQuery and jQuery Mobile -->
+    <script src="javascript/jquery-1.9.1.min.js"></script>
+    <script src="javascript/jquery.mobile-1.3.1.min.js"></script>
+
+
+    <script type="text/javascript">
+
+
+        var controlLights = function($deviceId, $state) {
+
+            var control = 'control.php?device=' + $deviceId +'&state=' + $state;
+            $.ajax({
+                url: control
+            })
+
+            var toggle = '#' + $deviceId + 'ToggleSwitch';
+
+            //enable the button if the value is >0
+            if ($state != 'on' && $state !='off'){
+
+                if($state >0)
+                    $('#' + $deviceId + 'ToggleSwitch').val('on').slider("refresh");
+                else
+                    $('#' + $deviceId + 'ToggleSwitch').val('off').slider("refresh");
+            }
+        };
+
+        // Loads the slides change events
+        // hocks the button to the slider
+        var loadSliderEvents = function($deviceId) {
+
+            var sliderOpts = {
+                change: function() {
+                    controlLights($deviceId, this.value)
+                },
+                slide: function() {
+                    controlLights($deviceId, this.value)
+                },
+                start: function() {
+                    controlLights($deviceId, this.value)
+                },
+                stop: function() {
+                    controlLights($deviceId, this.value)
+                }
+            };
+            $('#' + $deviceId + 'Slider').slider(sliderOpts);
+        };
+
+        var loadSliderToggle = function($deviceId) {
+
+            var sliderOpts = {
+                change: function() {
+                },
+                slide: function() {
+                },
+                start: function() {
+                },
+                stop: function() {
+                    var myswitch = $(this);
+                    var show     = myswitch[0].selectedIndex == 1 ? true:false;
+
+                    if (show)
+                        controlLights($deviceId, 'on');
+                    else
+                        controlLights($deviceId, 'off');
+                }
+            };
+
+            $('#' + $deviceId + 'ToggleSwitch').slider(sliderOpts);
+        };
+
+
+        $().ready(function(){
+
+            loadSliderEvents("R1D1");
+            loadSliderToggle("R1D1");
+
+            loadSliderEvents("R1D2");
+            loadSliderToggle("R1D2");
+
+            loadSliderToggle("R1D3");
+
+            loadSliderEvents("R2D1");
+            loadSliderToggle("R2D1");
+
+            loadSliderEvents("R2D2");
+            loadSliderToggle("R2D2");
+        });
+
+        answer_show = SiriAnswer.new(answer_headline, [
+            SiriAnswerLine.new(answer_headline, picurl)
+        ])
+
+        object.views << SiriAnswerSnippet.new([answer_show])					# push all to the phone
+        send_object object
+    </script>
+
+
+    <!-- Extra Codiqa features -->
+    <script src="javascript/codiqa.ext.js"></script>
+
+</head>
+<body>
+<!-- Home -->
+<div data-role="page" id="page1">
+<div id="Header" data-theme="a" data-role="header" data-position="fixed"
+     class="header">
+<h3>
+    LightWave By Wes <input type="submit" data-icon="alert" data-iconpos="top" value="Leave House">
+</h3>
+
+<div data-role="collapsible-set">
+
+<!-- ROOM -->
+
+<div data-role="collapsible" data-collapsed="false">
+    <h3>Living Room</h3>
+    <!-- Device R1D1 -->
+    <div id="R1D1">
+        <table width="100%">
+            <tr>
+                <td width=50%>
+                    <img src="thumbs/light.png"/> Main
+                </td>
+                <td width=50%>
+                    <div data-role="fieldcontain">
+                        <select id="R1D1ToggleSwitch" data-role="slider">
+                            <option value="off">
+                                Off
+                            </option>
+                            <option value="on">
+                                On
+                            </option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td colspan="2">
+                    <div data-role="content">
+
+                        <input id="R1D1Slider" type="range" name="slider" value="0" min="0" max="100"
+                               data-highlight="true">
+                    </div>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td>
+                    <img src="thumbs/light.png"/> Kitchen
+                </td>
+                <td>
+                    <div data-role="fieldcontain">
+                        <select id="R1D2ToggleSwitch" data-role="slider">
+                            <option value="off">
+                                Off
+                            </option>
+                            <option value="on">
+                                On
+                            </option>
+                        </select>
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div data-role="content">
+
+                        <input id="R1D2Slider" type="range" name="slider" value="0" min="0" max="100"
+                               data-highlight="true">
+                    </div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    <img src="thumbs/light.png"/> Webcam
+                </td>
+                <td>
+                    <div data-role="fieldcontain">
+                        <select id="R1D3ToggleSwitch" data-role="slider">
+                            <option value="off">
+                                Off
+                            </option>
+                            <option value="on">
+                                On
+                            </option>
+                        </select>
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" data-icon="alert" data-iconpos="top" value="All Off">
+                </td>
+            </tr>
+
+
+
+
+
+
+
+        </table>
+
+    </div>
+</div>
+
+<!-- end ROOM -->
+
+
+
+<div data-role="collapsible" data-collapsed="true">
+    <h3>
+        Master Bedroom
+        <div id="messageBox"></div>
+    </h3>
+
+
+    <!-- Device R1D1 -->
+
+    <div id="R2">
+
+        <table width="100%">
+            <tr>
+                <td width=50%>
+                    <img src="thumbs/light.png"/> Main
+                </td>
+                <td width=50%>
+                    <div data-role="fieldcontain">
+                        <select id="R2D1ToggleSwitch" data-role="slider">
+                            <option value="off">
+                                Off
+                            </option>
+                            <option value="on">
+                                On
+                            </option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td colspan="2">
+                    <div data-role="content">
+
+                        <input id="R2D1Slider" type="range" name="slider" value="0" min="0" max="100"
+                               data-highlight="true">
+                    </div>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td>
+                    <img src="thumbs/light.png"/> Bathroom
+                </td>
+                <td>
+                    <div data-role="fieldcontain">
+                        <select id="R2D2ToggleSwitch" data-role="slider">
+                            <option value="off">
+                                Off
+                            </option>
+                            <option value="on">
+                                On
+                            </option>
+                        </select>
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div data-role="content">
+
+                        <input id="R2D2Slider" type="range" name="slider" value="0" min="0" max="100"
+                               data-highlight="true">
+                    </div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    <img src="thumbs/lamp.png"/> Lamp
+                </td>
+                <td>
+                    <div data-role="fieldcontain">
+                        <fieldset data-role="controlgroup" data-type="horizontal">
+                            <input id="radio1" name="" value="radio1" type="radio">
+                            <label for="radio1">
+                                On
+                            </label>
+                            <input id="radio2" name="" value="radio2" type="radio">
+                            <label for="radio2">
+                                Off
+                            </label>
+                        </fieldset>
+                    </div>
+                </td>
+
+
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" data-icon="alert" data-iconpos="top" value="All Off">
+                </td>
+            </tr>
+
+
+
+
+
+
+
+        </table>
+
+    </div>
+</div>
+
+
+</div>
+</div>
+<div data-role="content">
+</div>
+<div data-theme="a" data-role="footer" data-position="fixed">
+    <h3>
+        Footer
+    </h3>
+</div>
+</div>
+</body>
+</html>
